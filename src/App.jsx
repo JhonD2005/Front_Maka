@@ -2,11 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Productos from "./pages/Productos";
-//import Recetas from "./pages/Recetas";
 import Login from "./pages/Login";
-//import Admin from "./pages/Admin";
-//import Cart from "./pages/Cart";
-//import ProtectedRoute from "./routes/ProtectedRoute";
+import Admin from "./pages/Admin";
+import ProtectedRoute from "./router/ProtectedRoute";
 
 function App() {
   return (
@@ -17,8 +15,11 @@ function App() {
         <Route path="/productos" element={<Productos />} />
         
         <Route path="/login" element={<Login />} />
-        
-        
+        <Route path="/admin" element={
+          <ProtectedRoute>
+            <Admin />
+          </ProtectedRoute>
+        }/>
       </Routes>
     </>
   );
