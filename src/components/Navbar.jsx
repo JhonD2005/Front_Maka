@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import logo from "../assets/Maka_Logo.jpeg";
+import logo from "../assets/logo_maka.jpeg";
 
 export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
@@ -19,7 +19,7 @@ export default function Navbar() {
           
           {/* LOGO */}
           <div style={styles.logo}>
-            <img src={logo} alt="Maka Logo" style={styles.logoImg} />
+            <img src={logo} alt="logo maka" style={styles.logoImg} />
           </div>
 
           {/* MENU */}
@@ -119,13 +119,13 @@ const styles = {
   },
 
   inner: {
-    width: "100%",
-    maxWidth: "1200px",
-    margin: "0 auto",
-    padding: "0 20px",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
+  width: "100%",
+  maxWidth: "1200px",
+  margin: "0 auto",
+  padding: "0 120px 0 0",
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
   },
 
   logo: {
