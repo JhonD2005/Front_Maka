@@ -1,14 +1,15 @@
-import hero from "../assets/fondo_cafe.jpg";
+import hero from "../assets/finca-maka.jpeg";
 import about from "../assets/imagen_2.jpg";
 import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <div style={{ marginTop: "80px" }}>
-      
-      {/* HERO SECTION */}
+    <>
+      {/* HERO */}
       <section style={styles.hero}>
-        <img src={hero} alt="Maka Café" style={styles.heroImg} />
+        <div style={styles.heroBackground}>
+          <img src={hero} alt="Maka Café" style={styles.heroImg} />
+        </div>
 
         <div style={styles.heroOverlay}>
           <h1 style={styles.heroTitle}>
@@ -79,11 +80,11 @@ export default function Home() {
       {/* CTA FINAL */}
       <section style={styles.ctaSection}>
         <div style={styles.containerCenter}>
-          <h2 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
+          <h2 style={styles.ctaTitle}>
             Vive la experiencia Maka
           </h2>
 
-          <p style={{ marginBottom: 30 }}>
+          <p style={styles.ctaText}>
             Haz tu pedido hoy y disfruta del mejor café artesanal.
           </p>
 
@@ -92,31 +93,36 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-    </div>
+    </>
   );
 }
 
 const styles = {
   hero: {
-    position: "relative",
-    height: "90vh",
-    width: "100%",
-    overflow: "hidden",
-  },
+  position: "relative",
+  marginTop: "79px", // altura del navbar
+  height: "calc(100vh - 1px)", // ajusta a tu navbar
+  width: "100%",              // 🔥 ahora sí usamos vw
+  marginLeft: "calc(-50vw + 50%)", // 🔥 elimina cualquier centrado padre
+  overflow: "hidden",
+},
 
-  heroImg: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    filter: "brightness(60%)",
-  },
+heroBackground: {
+  position: "absolute",
+  inset: 1,
+},
+
+heroImg: {
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+  display: "block",
+  filter: "brightness(55%)",
+},
 
   heroOverlay: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
+    position: "relative",
+    zIndex: 1,
     height: "100%",
     display: "flex",
     flexDirection: "column",
@@ -128,23 +134,25 @@ const styles = {
   },
 
   heroTitle: {
-    fontSize: "3.5rem",
+    fontSize: "3.2rem",
     marginBottom: 20,
+    maxWidth: "900px",
   },
 
   heroText: {
-    fontSize: "1.2rem",
+    fontSize: "1.3rem",
     marginBottom: 30,
+    letterSpacing: "1px",
   },
 
   sectionLight: {
     background: "#f5f1ed",
-    padding: "80px 20px",
+    padding: "100px 20px",
   },
 
   sectionWhite: {
     background: "white",
-    padding: "80px 20px",
+    padding: "100px 20px",
   },
 
   container: {
@@ -160,7 +168,7 @@ const styles = {
 
   flexWrap: {
     display: "flex",
-    gap: 50,
+    gap: 60,
     alignItems: "center",
     flexWrap: "wrap",
   },
@@ -178,33 +186,35 @@ const styles = {
 
   sectionTitle: {
     fontSize: "2.5rem",
-    marginBottom: 20,
+    marginBottom: 25,
   },
 
   paragraph: {
     lineHeight: 1.8,
-    marginBottom: 20,
+    marginBottom: 25,
   },
 
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: 40,
+    gap: 50,
     textAlign: "center",
+    marginTop: 40,
   },
 
   primaryBtn: {
     background: "#5d4037",
-    padding: "12px 30px",
+    padding: "14px 35px",
     borderRadius: 30,
     color: "white",
     textDecoration: "none",
     fontWeight: "600",
+    transition: "0.3s",
   },
 
   darkBtn: {
     background: "#3e2723",
-    padding: "10px 25px",
+    padding: "12px 30px",
     borderRadius: 25,
     color: "white",
     textDecoration: "none",
@@ -212,7 +222,7 @@ const styles = {
 
   secondaryBtn: {
     background: "#d7a86e",
-    padding: "12px 30px",
+    padding: "14px 35px",
     borderRadius: 30,
     color: "#3e2723",
     fontWeight: "600",
@@ -220,8 +230,18 @@ const styles = {
   },
 
   ctaSection: {
-    padding: "100px 20px",
+    padding: "120px 20px",
     background: "#3e2723",
     color: "white",
+  },
+
+  ctaTitle: {
+    fontSize: "2.5rem",
+    marginBottom: 20,
+  },
+
+  ctaText: {
+    marginBottom: 30,
+    fontSize: "1.1rem",
   },
 };

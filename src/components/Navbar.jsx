@@ -15,16 +15,14 @@ export default function Navbar() {
   return (
     <>
       <nav style={styles.navbar}>
-        <div style={styles.container}>
+        <div style={styles.inner}>
           
+          {/* LOGO */}
           <div style={styles.logo}>
-            <img 
-              src={logo} 
-              alt="Maka Logo" 
-              style={styles.logoImg}
-            />
+            <img src={logo} alt="Maka Logo" style={styles.logoImg} />
           </div>
 
+          {/* MENU */}
           <div style={styles.menu}>
             <NavLink to="/" end className="nav-item">
               Inicio
@@ -48,8 +46,8 @@ export default function Navbar() {
                   Hola, {user.nombre}
                 </span>
 
-                <button 
-                  onClick={handleLogout} 
+                <button
+                  onClick={handleLogout}
                   className="nav-item logout-btn"
                 >
                   Cerrar sesión
@@ -120,7 +118,7 @@ const styles = {
     zIndex: 1000,
   },
 
-  container: {
+  inner: {
     width: "100%",
     maxWidth: "1200px",
     margin: "0 auto",
@@ -136,18 +134,18 @@ const styles = {
   },
 
   logoImg: {
-    height: "70px",
+    height: "60px",   // ligeramente más equilibrado
     objectFit: "contain",
   },
 
   menu: {
     display: "flex",
-    gap: "30px",
+    gap: "25px",
     alignItems: "center",
   },
 
   user: {
     color: "#fff",
     fontWeight: "500",
-  }
+  },
 };
