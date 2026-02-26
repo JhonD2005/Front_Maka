@@ -144,12 +144,19 @@ export default function Login() {
 
 const styles = {
   wrapper: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    background: "linear-gradient(135deg, #3e2723, #795548)",
-  },
+  position: "fixed",
+  top: 80,        // altura del navbar
+  left: 0,
+  right: 0,
+  bottom: 0,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundImage: `url('https://images.pexels.com/photos/4085266/pexels-photo-4085266.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')`,
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+},
 
   card: {
     background: "white",

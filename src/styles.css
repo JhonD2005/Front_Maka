@@ -1,52 +1,24 @@
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-html, body {
+html, body, #root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
   overflow-x: hidden;
-}
+} /* 🔥 AQUÍ FALTABA ESTA LLAVE */
 
+/* BODY GLOBAL */
 body {
   font-family: 'Poppins', sans-serif;
-  background: #f5f1ea;
-  color: #3e2723;
   line-height: 1.6;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: #3e2723;
-  color: white;
-}
-
-.navbar a {
-  color: white;
-  margin-left: 1rem;
-  text-decoration: none;
-  transition: 0.3s ease;
-}
-
-.navbar a:hover {
-  opacity: 0.7;
-}
-
-.hero {
-  height: 60vh;
-  background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93') center/cover no-repeat;
-  color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-shadow: 0 2px 5px black;
-}
-
+/* GRID GENERAL */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -54,6 +26,7 @@ body {
   padding: 2rem;
 }
 
+/* CARD GENERAL */
 .card {
   background: white;
   padding: 1.5rem;
@@ -66,6 +39,7 @@ body {
   transform: translateY(-5px);
 }
 
+/* BOTONES GENERALES */
 button {
   margin-top: 1rem;
   padding: 0.6rem 1.2rem;
@@ -82,17 +56,25 @@ button:hover {
   transform: scale(1.05);
 }
 
+/* CONTENEDOR CENTRAL */
 .container {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* INPUTS */
 input {
   display: block;
   margin: 0.5rem 0;
   padding: 0.6rem;
   border-radius: 6px;
   border: 1px solid #ccc;
+  width: 100%;
+}
+
+/* LAYOUT */
+.content {
+  margin-top: 80px; /* altura del navbar */
   width: 100%;
 }
