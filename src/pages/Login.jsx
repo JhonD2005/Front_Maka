@@ -145,7 +145,7 @@ export default function Login() {
 const styles = {
   wrapper: {
   position: "fixed",
-  top: 80,        // altura del navbar
+  top: 80,        
   left: 0,
   right: 0,
   bottom: 0,

@@ -41,7 +41,6 @@ export default function Productos() {
           {productos.map((p) => (
             <div key={p.id} style={styles.card}>
               
-              {/* Imagen */}
               <div style={styles.imageContainer}>
                 <img
                   src={imagenes[p.id] || premium}
@@ -50,7 +49,6 @@ export default function Productos() {
                 />
               </div>
 
-              {/* Contenido */}
               <div style={styles.cardContent}>
                 <h3 style={styles.name}>{p.nombre}</h3>
 
@@ -127,7 +125,7 @@ const styles = {
   image: {
     maxWidth: "100%",
     maxHeight: "100%",
-    objectFit: "contain", // 👈 ahora no corta la imagen
+    objectFit: "contain", 
   },
 
   cardContent: {
