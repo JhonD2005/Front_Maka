@@ -3,7 +3,7 @@ import api from "../../services/api";
 
 export default function AdminProductos() {
 
-  const adminId = 3; // 👈 Cambia al ID real de tu admin
+  const adminId = 1;
 
   const [productos, setProductos] = useState([]);
   const [editId, setEditId] = useState(null);

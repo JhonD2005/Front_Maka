@@ -10,7 +10,6 @@ export default function Admin() {
       <div style={styles.container}>
         <h2 style={styles.title}>Panel de Administración</h2>
 
-        {/* MENU DE SECCIONES */}
         <div style={styles.menu}>
           <button
             onClick={() => setSection("productos")}
