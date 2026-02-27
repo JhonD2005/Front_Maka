@@ -107,9 +107,9 @@ export default function Home() {
 
           <div>
             <h4>Contacto</h4>
-            <p>📍 Colombia</p>
-            <p>📧 contacto@makacafe.com</p>
-            <p>📞 +57 300 000 0000</p>
+            <p>📍 Andes, Antioquia, Colombia</p>
+            <p>📧 cafemaka2@gmail.com</p>
+            <p>📞 +57 320 5971279</p>
           </div>
         </div>
 
