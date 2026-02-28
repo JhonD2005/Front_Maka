@@ -52,7 +52,6 @@ export default function AdminRecetas() {
       <div style={styles.container}>
         <h2 style={styles.mainTitle}>Panel de Gestión de Recetas</h2>
 
-        {/* FORMULARIO */}
         <div style={styles.card}>
           <h3 style={styles.sectionTitle}>Agregar Nueva Receta</h3>
 
@@ -99,7 +98,6 @@ export default function AdminRecetas() {
           </form>
         </div>
 
-        {/* LISTA */}
         <div style={styles.card}>
           <h3 style={styles.sectionTitle}>Recetas Registradas</h3>
 

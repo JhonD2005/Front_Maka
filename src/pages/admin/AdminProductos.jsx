@@ -105,7 +105,6 @@ export default function AdminProductos() {
       <div style={styles.container}>
         <h2 style={styles.title}>Panel Administrador</h2>
 
-        {/* FORMULARIO */}
         <div style={styles.card}>
           <h3>{editId ? "Editar Producto" : "Agregar Producto"}</h3>
 

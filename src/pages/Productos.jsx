@@ -83,7 +83,6 @@ export default function Productos() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer style={styles.footer}>
         <div style={styles.footerContainer}>
           <div>
