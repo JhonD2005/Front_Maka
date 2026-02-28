@@ -6,7 +6,7 @@ import Recetas from "./pages/Recetas";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
-import ProtectedRoute from "./routes/ProtectedRoute";
+import ProtectedRoute from "./router/ProtectedRoute";
 
 function App() {
   return (

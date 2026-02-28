@@ -1,22 +1,46 @@
-import hero from "../assets/fondo_cafe.jpg";
-import about from "../assets/imagen_2.jpg";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Home() {
-  return (
-    <div style={{ marginTop: "80px" }}>
-      
-      {/* HERO SECTION */}
-      <section style={styles.hero}>
-        <img src={hero} alt="Maka Café" style={styles.heroImg} />
 
-        <div style={styles.heroOverlay}>
+  const images = [
+    "https://images.pexels.com/photos/34073/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "https://colombiancoffee.us/cdn/shop/articles/tips-to-recognize-good-quality-coffee-424970.png?v=1713377616&width=1024",
+    "https://images.pexels.com/photos/7125492/pexels-photo-7125492.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+  ];
+
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % images.length);
+    }, 7000); 
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  return (
+    <>
+      {/* HERO */}
+      <section style={styles.hero}>
+        {images.map((img, index) => (
+          <div
+            key={index}
+            style={{
+              ...styles.slide,
+              backgroundImage: `url(${img})`,
+              opacity: index === current ? 1 : 0,
+            }}
+          />
+        ))}
+
+        <div style={styles.overlay}>
           <h1 style={styles.heroTitle}>
-            Descubre el verdadero sabor del café
+            Descubre el verdadero sabor del café artesanal
           </h1>
 
           <p style={styles.heroText}>
-            Artesanal • Orgánico • Premium
+            Experiencia • Aroma • Pasión
           </p>
 
           <Link to="/productos" style={styles.primaryBtn}>
@@ -25,155 +49,133 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ABOUT SECTION */}
       <section style={styles.sectionLight}>
         <div style={styles.container}>
-          <div style={styles.flexWrap}>
-            <div style={styles.flexItem}>
-              <h2 style={styles.sectionTitle}>Sobre Maka</h2>
-              <p style={styles.paragraph}>
-                Maka nace del amor por el café artesanal y la dedicación a crear
-                experiencias únicas en cada taza. Seleccionamos los mejores
-                granos, trabajamos procesos cuidadosos y entregamos calidad
-                premium en cada producto.
-              </p>
-
-              <Link to="/productos" style={styles.darkBtn}>
-                Ver Nuestro Catálogo
-              </Link>
-            </div>
-
-            <div style={styles.flexItem}>
-              <img src={about} alt="Sobre Maka" style={styles.aboutImg} />
-            </div>
-          </div>
+          <h2 style={styles.sectionTitle}>Nuestra Filosofía</h2>
+          <p style={styles.paragraphCenter}>
+            En Maka seleccionamos los mejores granos, respetamos los procesos
+            naturales y creamos experiencias que conectan con tus sentidos.
+            Cada taza cuenta una historia.
+          </p>
         </div>
       </section>
 
-      {/* BENEFITS SECTION */}
       <section style={styles.sectionWhite}>
         <div style={styles.container}>
-          <h2 style={{ ...styles.sectionTitle, textAlign: "center" }}>
-            ¿Por qué elegir Maka?
-          </h2>
-
           <div style={styles.grid}>
-            <div>
+            <div style={styles.card}>
               <h3>🌱 100% Orgánico</h3>
-              <p>Cultivado de manera responsable y sostenible.</p>
+              <p>Cultivo responsable y sostenible.</p>
             </div>
 
-            <div>
+            <div style={styles.card}>
               <h3>🔥 Tostado Artesanal</h3>
-              <p>Procesos cuidadosos para resaltar cada nota de sabor.</p>
+              <p>Procesos cuidadosos que resaltan cada nota.</p>
             </div>
 
-            <div>
+            <div style={styles.card}>
               <h3>🚚 Envíos Rápidos</h3>
-              <p>Llevamos el mejor café directo a tu puerta.</p>
+              <p>Directo a tu puerta con frescura garantizada.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA FINAL */}
       <section style={styles.ctaSection}>
-        <div style={styles.containerCenter}>
-          <h2 style={{ fontSize: "2.5rem", marginBottom: 20 }}>
-            Vive la experiencia Maka
-          </h2>
-
-          <p style={{ marginBottom: 30 }}>
-            Haz tu pedido hoy y disfruta del mejor café artesanal.
-          </p>
-
-          <Link to="/productos" style={styles.secondaryBtn}>
-            Comprar Ahora
-          </Link>
-        </div>
+        <h2 style={styles.ctaTitle}>Vive la experiencia Maka</h2>
+        <p style={styles.ctaText}>
+          Haz tu pedido hoy y disfruta del mejor café artesanal.
+        </p>
+        <Link to="/productos" style={styles.secondaryBtn}>
+          Comprar Ahora
+        </Link>
       </section>
 
-    </div>
+      <footer style={styles.footer}>
+        <div style={styles.footerContainer}>
+          <div>
+            <h3>Maka Café</h3>
+            <p>Pasión por el café artesanal premium.</p>
+          </div>
+
+          <div>
+            <h4>Enlaces</h4>
+            <p><Link to="/" style={styles.footerLink}>Inicio</Link></p>
+            <p><Link to="/productos" style={styles.footerLink}>Productos</Link></p>
+            <p><Link to="/recetas" style={styles.footerLink}>Recetas</Link></p>
+          </div>
+
+          <div>
+            <h4>Contacto</h4>
+            <p>📍 Andes, Antioquia, Colombia</p>
+            <p>📧 cafemaka2@gmail.com</p>
+            <p>📞 +57 320 5971279</p>
+          </div>
+        </div>
+
+        <div style={styles.footerBottom}>
+          © {new Date().getFullYear()} Maka Café — Todos los derechos reservados
+        </div>
+      </footer>
+    </>
   );
 }
 
 const styles = {
+
   hero: {
     position: "relative",
-    height: "90vh",
-    width: "100%",
+    height: "100vh",
     overflow: "hidden",
   },
 
-  heroImg: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    filter: "brightness(60%)",
+  slide: {
+    position: "absolute",
+    inset: 0,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    transition: "opacity 2.5s ease-in-out",
   },
 
-  heroOverlay: {
+  overlay: {
     position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
+    inset: 0,
+    backgroundColor: "rgba(0,0,0,0.55)",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     color: "white",
     textAlign: "center",
-    padding: "20px",
+    padding: 20,
+    zIndex: 2,
   },
 
   heroTitle: {
-    fontSize: "3.5rem",
+    fontSize: "3rem",
+    maxWidth: 900,
     marginBottom: 20,
   },
 
   heroText: {
-    fontSize: "1.2rem",
+    fontSize: "1.3rem",
     marginBottom: 30,
   },
 
   sectionLight: {
+    padding: "100px 20px",
     background: "#f5f1ed",
-    padding: "80px 20px",
-  },
-
-  sectionWhite: {
-    background: "white",
-    padding: "80px 20px",
-  },
-
-  container: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-  },
-
-  containerCenter: {
-    maxWidth: "800px",
-    margin: "0 auto",
     textAlign: "center",
   },
 
-  flexWrap: {
-    display: "flex",
-    gap: 50,
-    alignItems: "center",
-    flexWrap: "wrap",
+  sectionWhite: {
+    padding: "100px 20px",
+    background: "white",
   },
 
-  flexItem: {
-    flex: 1,
-    minWidth: "300px",
-  },
-
-  aboutImg: {
-    width: "100%",
-    borderRadius: 20,
-    boxShadow: "0 15px 40px rgba(0,0,0,0.2)",
+  container: {
+    maxWidth: 1200,
+    margin: "0 auto",
   },
 
   sectionTitle: {
@@ -181,47 +183,84 @@ const styles = {
     marginBottom: 20,
   },
 
-  paragraph: {
+  paragraphCenter: {
+    maxWidth: 700,
+    margin: "0 auto",
     lineHeight: 1.8,
-    marginBottom: 20,
   },
 
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
     gap: 40,
+  },
+
+  card: {
+    padding: 30,
+    borderRadius: 15,
+    background: "#fff",
+    boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
     textAlign: "center",
   },
 
   primaryBtn: {
-    background: "#5d4037",
-    padding: "12px 30px",
+    background: "#6f4e37",
+    padding: "14px 35px",
     borderRadius: 30,
     color: "white",
     textDecoration: "none",
     fontWeight: "600",
-  },
-
-  darkBtn: {
-    background: "#3e2723",
-    padding: "10px 25px",
-    borderRadius: 25,
-    color: "white",
-    textDecoration: "none",
   },
 
   secondaryBtn: {
     background: "#d7a86e",
-    padding: "12px 30px",
+    padding: "14px 35px",
     borderRadius: 30,
     color: "#3e2723",
-    fontWeight: "600",
     textDecoration: "none",
+    fontWeight: "600",
   },
 
   ctaSection: {
-    padding: "100px 20px",
+    padding: "120px 20px",
     background: "#3e2723",
     color: "white",
+    textAlign: "center",
+  },
+
+  ctaTitle: {
+    fontSize: "2.5rem",
+    marginBottom: 20,
+  },
+
+  ctaText: {
+    marginBottom: 30,
+  },
+
+  footer: {
+    background: "#2c1e1a",
+    color: "white",
+    padding: "60px 20px 20px",
+  },
+
+  footerContainer: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+    gap: 40,
+    maxWidth: 1200,
+    margin: "0 auto",
+  },
+
+  footerLink: {
+    color: "#d7a86e",
+    textDecoration: "none",
+  },
+
+  footerBottom: {
+    textAlign: "center",
+    marginTop: 40,
+    borderTop: "1px solid rgba(255,255,255,0.2)",
+    paddingTop: 20,
+    fontSize: 14,
   },
 };
