@@ -32,7 +32,6 @@ export default function Admin() {
           </button>
         </div>
 
-        {/* SECCIÓN ACTIVA */}
         <div style={styles.section}>
           {section === "productos" && <AdminProductos />}
           {section === "recetas" && <AdminRecetas />}
