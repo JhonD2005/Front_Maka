@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import img from "../assets/product.jpg";
 
 export default function Cart() {
   const { cart, removeFromCart, addToCart, decreaseQuantity } = useContext(CartContext);

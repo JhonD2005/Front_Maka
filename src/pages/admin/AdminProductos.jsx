@@ -36,35 +36,32 @@ export default function AdminProductos() {
 
   // Guardar / Actualizar producto
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    try {
-      if (editId) {
-        // Actualizar producto
-        await api.put(`/productos/${editId}/admin/${adminId}`, form);
-        setEditId(null);
-        alert("Producto actualizado correctamente");
-      } else {
-        // Crear producto
-        await api.post(`/productos/admin/${adminId}`, form);
-        alert("Producto creado correctamente");
-      }
-
-      // Limpiar formulario
-      setForm({
-        nombre: "",
-        descripcion: "",
-        precio: "",
-        stock: "",
-      });
-
-      fetchProductos();
-
-    } catch (error) {
-      console.error(error);
-      alert("Error al guardar el producto");
+  try {
+    if (editId) {
+      await api.put(`/productos/${editId}`, form);
+      setEditId(null);
+      alert("Producto actualizado correctamente");
+    } else {
+      await api.post("/productos", form);
+      alert("Producto creado correctamente");
     }
-  };
+
+    setForm({
+      nombre: "",
+      descripcion: "",
+      precio: "",
+      stock: "",
+    });
+
+    fetchProductos();
+
+  } catch (error) {
+    console.error(error);
+    alert("No autorizado o error al guardar el producto");
+  }
+};
 
   // Editar producto
   const handleEdit = (producto) => {
@@ -90,15 +87,15 @@ export default function AdminProductos() {
 
   // Eliminar producto
   const handleDelete = async (id) => {
-    try {
-      await api.delete(`/productos/${id}/admin/${adminId}`);
-      fetchProductos();
-      alert("Producto eliminado correctamente");
-    } catch (error) {
-      console.error(error);
-      alert("Error al eliminar el producto");
-    }
-  };
+  try {
+    await api.delete(`/productos/${id}`);
+    fetchProductos();
+    alert("Producto eliminado correctamente");
+  } catch (error) {
+    console.error(error);
+    alert("No autorizado o error al eliminar el producto");
+  }
+};
 
   return (
     <div style={styles.background}>
