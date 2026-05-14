@@ -1,15 +1,46 @@
-
-import r1 from "../assets/imagen_2.jpg";
-import r2 from "../assets/imagen_2.jpg";
-import r3 from "../assets/imagen_2.jpg";
-
 export default function Recetas() {
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Recetas</h2>
-      <img src={r1} width="300" />
-      <img src={r2} width="300" />
-      <img src={r3} width="300" />
-    </div>
+    <section
+      style={{
+        minHeight: "70vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#f8f8f8",
+        padding: "40px 20px",
+      }}
+    >
+      <div
+        style={{
+          textAlign: "center",
+          background: "white",
+          padding: "50px 40px",
+          borderRadius: "20px",
+          boxShadow: "0 10px 25px rgba(0,0,0,0.1)",
+          maxWidth: "600px",
+          width: "100%",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "3rem",
+            marginBottom: "15px",
+            color: "#222",
+          }}
+        >
+           Próximamente
+        </h1>
+
+        <p
+          style={{
+            fontSize: "1.2rem",
+            color: "#555",
+            lineHeight: "1.6",
+          }}
+        >
+          Muy pronto podrás explorar contenido exclusivo en Maka.
+        </p>
+      </div>
+    </section>
   );
 }

@@ -1,5 +1,4 @@
-import { useEffect, useState, useContext } from "react";
-import api from "../services/api";
+import { useState, useContext, useEffect } from "react";
 import { CartContext } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
@@ -13,15 +12,59 @@ const imagenes = {
   3: fermentacion,
 };
 
+
+const productosMock = [
+  {
+    id: 1,
+    nombre: "Café Premium",
+    descripcion:
+      "Perfil elegante con notas dulces de chocolate y panela.",
+    precio: 25000,
+    gramos: "500g",
+    origen: "Andes, Antioquia",
+    tueste: "Medio oscuro",
+    notas: "Chocolate · Panela · Caramelo",
+    detalle:
+      "Ideal para espresso y bebidas intensas con cuerpo cremoso.",
+  },
+
+  {
+    id: 2,
+    nombre: "Café Tradicional",
+    descripcion:
+      "Sabor clásico colombiano, balanceado y aromático.",
+    precio: 18000,
+    gramos: "500g",
+    origen: "Antioquia",
+    tueste: "Medio",
+    notas: "Avellana · Cacao · Dulce",
+    detalle:
+      "Perfecto para el día a día con un aroma suave y tradicional.",
+  },
+
+  {
+    id: 3,
+    nombre: "Fermentación Prolongada",
+    descripcion:
+      "Perfil exótico con acidez brillante y notas frutales.",
+    precio: 32000,
+    gramos: "500g",
+    origen: "Andes, Antioquia",
+    tueste: "Claro",
+    notas: "Frutal · Tropical · Vino",
+    detalle:
+      "Experiencia compleja y moderna para amantes del café especial.",
+  },
+];
+
 export default function Productos() {
   const [productos, setProductos] = useState([]);
   const [addedId, setAddedId] = useState(null);
+
   const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
-    api.get("/productos")
-      .then(res => setProductos(res.data))
-      .catch(console.error);
+    setProductos(productosMock);
   }, []);
 
   const handleAdd = (producto) => {
@@ -36,45 +79,132 @@ export default function Productos() {
   return (
     <>
       <section style={styles.section}>
+
+        {/* textura elegante */}
+        <div style={styles.overlay}></div>
+
         <div style={styles.container}>
-          <h2 style={styles.title}>Nuestros Cafés</h2>
-          <p style={styles.subtitle}>
-            Café de origen cultivado en las montañas de Andes, Antioquia. Tradición, calidad y pasión en cada grano.
-          </p>
+
+          <div style={styles.heading}>
+            <span style={styles.badge}>
+              Café Colombiano Especial
+            </span>
+
+            <h2 style={styles.title}>
+              Nuestros Cafés
+            </h2>
+
+            <p style={styles.subtitle}>
+              Cultivado artesanalmente en las montañas de
+              Antioquia. Calidad, aroma y tradición en cada
+              taza.
+            </p>
+          </div>
 
           <div style={styles.grid}>
             {productos.map((p) => (
-              <div key={p.id} style={styles.card}>
+              <div
+                key={p.id}
+                style={styles.flipCard}
+                onMouseEnter={(e) => {
+                  if (window.innerWidth > 768) {
+                    e.currentTarget.firstChild.style.transform =
+                      "rotateY(180deg)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (window.innerWidth > 768) {
+                    e.currentTarget.firstChild.style.transform =
+                      "rotateY(0deg)";
+                  }
+                }}
+              >
+                <div style={styles.flipInner}>
 
-                <div style={styles.imageContainer}>
-                  <img
-                    src={imagenes[p.id] || premium}
-                    alt={p.nombre}
-                    style={styles.image}
-                  />
-                </div>
+                  {/* FRONT */}
+                  <div style={styles.front}>
 
-                <div style={styles.cardContent}>
-                  <h3 style={styles.name}>{p.nombre}</h3>
+                    <div style={styles.imageWrapper}>
+                      <div style={styles.imageGlow}></div>
 
-                  <p style={styles.description}>
-                    {p.descripcion}
-                  </p>
+                      <img
+                        src={imagenes[p.id]}
+                        alt={p.nombre}
+                        style={styles.image}
+                      />
+                    </div>
 
-                  <p style={styles.price}>
-                    ${p.precio}
-                  </p>
+                    <div style={styles.content}>
 
-                  <button
-                    style={{
-                      ...styles.button,
-                      backgroundColor:
-                        addedId === p.id ? "#4CAF50" : "#5d4037",
-                    }}
-                    onClick={() => handleAdd(p)}
-                  >
-                    {addedId === p.id ? "✔ Agregado" : "Agregar al carrito"}
-                  </button>
+                      <span style={styles.tag}>
+                        Café Colombiano
+                      </span>
+
+                      <h3 style={styles.name}>
+                        {p.nombre}
+                      </h3>
+
+                      <p style={styles.description}>
+                        {p.descripcion}
+                      </p>
+
+                      <div style={styles.footerCard}>
+
+                        <span style={styles.price}>
+                          ${p.precio}
+                        </span>
+
+                        <span style={styles.weight}>
+                          500g
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* BACK */}
+                  <div style={styles.back}>
+
+                    <div>
+                      <h3 style={styles.backTitle}>
+                        {p.nombre}
+                      </h3>
+
+                      <p style={styles.backText}>
+                        <strong>Origen:</strong> {p.origen}
+                      </p>
+
+                      <p style={styles.backText}>
+                        <strong>Tueste:</strong> {p.tueste}
+                      </p>
+
+                      <p style={styles.backText}>
+                        <strong>Notas:</strong> {p.notas}
+                      </p>
+
+                      <p style={styles.backText}>
+                        <strong>Presentación:</strong> {p.gramos}
+                      </p>
+
+                      <p style={styles.backDescription}>
+                        {p.detalle}
+                      </p>
+                    </div>
+
+                    <button
+                      style={{
+                        ...styles.button,
+                        background:
+                          addedId === p.id
+                            ? "#4CAF50"
+                            : "#6f4e37",
+                      }}
+                      onClick={() => handleAdd(p)}
+                    >
+                      {addedId === p.id
+                        ? "✔ Agregado"
+                        : "Agregar"}
+                    </button>
+                  </div>
 
                 </div>
               </div>
@@ -86,20 +216,48 @@ export default function Productos() {
       {/* FOOTER */}
       <footer style={styles.footer}>
         <div style={styles.footerContainer}>
+
           <div>
-            <h3 style={{ marginBottom: 10 }}>Maka Café</h3>
-            <p>Café artesanal colombiano de especialidad.</p>
+            <h3 style={{ marginBottom: 10 }}>
+              Maka Café
+            </h3>
+
+            <p>
+              Café artesanal colombiano de especialidad.
+            </p>
           </div>
 
           <div>
             <h4>Explorar</h4>
-            <p><Link to="/" style={styles.footerLink}>Inicio</Link></p>
-            <p><Link to="/productos" style={styles.footerLink}>Productos</Link></p>
-            <p><Link to="/recetas" style={styles.footerLink}>Recetas</Link></p>
+
+            <p>
+              <Link to="/" style={styles.footerLink}>
+                Inicio
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/productos"
+                style={styles.footerLink}
+              >
+                Productos
+              </Link>
+            </p>
+
+            <p>
+              <Link
+                to="/recetas"
+                style={styles.footerLink}
+              >
+                Recetas
+              </Link>
+            </p>
           </div>
 
           <div>
             <h4>Contacto</h4>
+
             <p>📍 Andes, Antioquia, Colombia</p>
             <p>📧 cafemaka2@gmail.com</p>
             <p>📞 +57 320 5971279</p>
@@ -107,7 +265,8 @@ export default function Productos() {
         </div>
 
         <div style={styles.footerBottom}>
-          © {new Date().getFullYear()} Maka Café — Todos los derechos reservados
+          © {new Date().getFullYear()} Maka Café —
+          Todos los derechos reservados
         </div>
       </footer>
     </>
@@ -115,94 +274,217 @@ export default function Productos() {
 }
 
 const styles = {
-
   section: {
-    marginTop: "100px",
-    padding: "100px 20px",
-    background: "linear-gradient(to bottom, #f5f1ed, #ede0d4)",
+    position: "relative",
+    padding: "120px 20px",
+    background: "#f6f1ea",
+    overflow: "hidden",
+  },
+
+  overlay: {
+    position: "absolute",
+    inset: 0,
+    background:
+      "radial-gradient(circle at top left, rgba(111,78,55,0.06), transparent 30%), radial-gradient(circle at bottom right, rgba(215,168,110,0.08), transparent 30%)",
   },
 
   container: {
-    maxWidth: "1200px",
+    position: "relative",
+    zIndex: 2,
+    maxWidth: "1300px",
     margin: "0 auto",
   },
 
-  title: {
+  heading: {
     textAlign: "center",
-    fontSize: "2.8rem",
-    fontWeight: "700",
-    marginBottom: "15px",
+    marginBottom: "70px",
+  },
+
+  badge: {
+    background: "#eadccf",
+    color: "#6f4e37",
+    padding: "10px 18px",
+    borderRadius: "40px",
+    fontWeight: "600",
+    fontSize: "0.85rem",
+  },
+
+  title: {
+    fontSize: "clamp(2.5rem, 5vw, 4rem)",
+    color: "#2c1e1a",
+    marginTop: "25px",
+    fontWeight: "800",
   },
 
   subtitle: {
-    textAlign: "center",
-    color: "#666",
-    marginBottom: "60px",
+    maxWidth: "650px",
+    margin: "20px auto 0",
+    color: "#6d6d6d",
+    lineHeight: "1.8",
+    fontSize: "1rem",
   },
 
   grid: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-    gap: "50px",
+    gap: "35px",
   },
 
-  card: {
-    background: "white",
-    borderRadius: "20px",
-    boxShadow: "0 20px 40px rgba(0,0,0,0.08)",
+  flipCard: {
+    height: "500px",
+    perspective: "1500px",
+  },
+
+  flipInner: {
+    position: "relative",
+    width: "100%",
+    height: "100%",
+    transition: "transform 0.8s ease",
+    transformStyle: "preserve-3d",
+  },
+
+  front: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backfaceVisibility: "hidden",
+    borderRadius: "30px",
     overflow: "hidden",
-    transition: "all 0.4s ease",
+    background: "rgba(255,255,255,0.75)",
+    backdropFilter: "blur(12px)",
+    border: "1px solid rgba(255,255,255,0.6)",
+    boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
+    display: "flex",
+    flexDirection: "column",
   },
 
-  imageContainer: {
-    height: "260px",
-    backgroundColor: "#fafafa",
+  back: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backfaceVisibility: "hidden",
+    transform: "rotateY(180deg)",
+    borderRadius: "30px",
+    padding: "35px",
+    background:
+      "linear-gradient(145deg,#4e342e,#2c1e1a)",
+    color: "white",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    boxShadow: "0 10px 40px rgba(0,0,0,0.15)",
+  },
+
+  imageWrapper: {
+    position: "relative",
+    height: "250px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    padding: "20px",
+    paddingTop: "20px",
+  },
+
+  imageGlow: {
+    position: "absolute",
+    width: "180px",
+    height: "180px",
+    borderRadius: "50%",
+    background:
+      "rgba(215,168,110,0.25)",
+    filter: "blur(40px)",
   },
 
   image: {
-    maxWidth: "100%",
-    maxHeight: "100%",
+    width: "210px",
+    height: "210px",
     objectFit: "contain",
-    transition: "transform 0.4s ease",
+    position: "relative",
+    zIndex: 2,
   },
 
-  cardContent: {
-    padding: "30px",
-    textAlign: "center",
+  content: {
+    padding: "25px",
+    display: "flex",
+    flexDirection: "column",
+    flex: 1,
+  },
+
+  tag: {
+    alignSelf: "flex-start",
+    background: "#f2e4d7",
+    color: "#6f4e37",
+    padding: "8px 15px",
+    borderRadius: "30px",
+    fontSize: "0.8rem",
+    fontWeight: "600",
   },
 
   name: {
-    fontSize: "1.4rem",
-    fontWeight: "600",
-    marginBottom: "12px",
+    fontSize: "2.2rem",
+    color: "#2c1e1a",
+    marginTop: "20px",
+    lineHeight: "1.1",
+    fontWeight: "800",
   },
 
   description: {
+    marginTop: "14px",
+    color: "#6b6b6b",
+    lineHeight: "1.7",
     fontSize: "0.95rem",
-    color: "#777",
-    marginBottom: "15px",
-    minHeight: "60px",
+    flex: 1,
+  },
+
+  footerCard: {
+    marginTop: "25px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
 
   price: {
-    fontSize: "1.4rem",
-    fontWeight: "bold",
-    color: "#5d4037",
-    marginBottom: "20px",
+    fontSize: "1.2rem",
+    fontWeight: "800",
+    color: "#6f4e37",
+  },
+
+  weight: {
+    background: "#efe2d3",
+    color: "#6f4e37",
+    padding: "8px 15px",
+    borderRadius: "20px",
+    fontWeight: "600",
+  },
+
+  backTitle: {
+    fontSize: "2.1rem",
+    marginBottom: "25px",
+    fontWeight: "800",
+  },
+
+  backText: {
+    marginBottom: "16px",
+    color: "#f3e6db",
+    lineHeight: "1.7",
+    fontSize: "1rem",
+  },
+
+  backDescription: {
+    marginTop: "30px",
+    lineHeight: "1.8",
+    color: "#ddd",
+    fontSize: "0.95rem",
   },
 
   button: {
-    padding: "12px 25px",
     border: "none",
-    borderRadius: "30px",
+    padding: "14px 24px",
+    borderRadius: "40px",
     color: "white",
-    fontWeight: "600",
+    fontWeight: "700",
     cursor: "pointer",
-    transition: "all 0.3s ease",
+    fontSize: "1rem",
+    transition: "0.3s",
   },
 
   footer: {
@@ -213,7 +495,8 @@ const styles = {
 
   footerContainer: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+    gridTemplateColumns:
+      "repeat(auto-fit, minmax(200px, 1fr))",
     gap: 40,
     maxWidth: 1200,
     margin: "0 auto",

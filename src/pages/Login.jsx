@@ -41,40 +41,39 @@ export default function Login() {
   };
 
   const handleSubmit = async () => {
-    setServerError("");
+  setServerError("");
 
-    if (!validate()) return;
+  if (!validate()) return;
 
-    try {
-      if (isRegister) {
-        await api.post("/auth/registrar", {
-          nombre: form.nombre,
-          email: form.email,
-          password: form.password,
-          rol: "USER"
-        });
+  try {
 
-        setIsRegister(false);
-        return;
-      }
-
-      const res = await api.post("/auth/login", {
+    if (isRegister) {
+      await api.post("/auth/registrar", {
+        nombre: form.nombre,
         email: form.email,
-        password: form.password
+        password: form.password,
+        rol: "USER"
       });
 
-      login(res.data);
-
-      if (res.data.rol === "ADMIN") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
-
-    } catch (error) {
-      setServerError("Correo o contraseña incorrectos");
+      setIsRegister(false);
+      return;
     }
-  };
+
+    const res = await api.post("/auth/login", {
+      email: form.email,
+      password: form.password
+    });
+
+    localStorage.setItem("token", res.data.token);
+
+    login(res.data.token);
+
+    navigate("/");
+
+  } catch (error) {
+    setServerError("Correo o contraseña incorrectos");
+  }
+};
 
   return (
     <div style={styles.wrapper}>

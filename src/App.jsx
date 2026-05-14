@@ -6,7 +6,10 @@ import Recetas from "./pages/Recetas";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
+import Contacto from "./pages/Contacto";
+import AcercaDe from "./pages/AcercaDe";
 import ProtectedRoute from "./router/ProtectedRoute";
+import WhatsAppButton from "./components/WhatsappButton";
 
 function App() {
   return (
@@ -18,12 +21,15 @@ function App() {
         <Route path="/recetas" element={<Recetas />} />
         <Route path="/login" element={<Login />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/acercade" element={<AcercaDe />} />
         <Route path="/admin" element={
           <ProtectedRoute>
             <Admin />
           </ProtectedRoute>
         }/>
       </Routes>
+      <WhatsAppButton />
     </>
   );
 }
