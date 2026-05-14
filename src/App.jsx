@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Productos from "./pages/Productos";
@@ -30,6 +31,7 @@ function App() {
         }/>
       </Routes>
       <WhatsAppButton />
+      <Analytics />
     </>
   );
 }
