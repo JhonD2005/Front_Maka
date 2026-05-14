@@ -1,10 +1,8 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo_maka.jpeg";
 
 export default function Navbar() {
-  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -29,12 +27,6 @@ export default function Navbar() {
       window.removeEventListener("resize", handleScroll);
     };
   }, []);
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-    setOpen(false);
-  };
 
   const closeMenu = () => setOpen(false);
 
@@ -175,20 +167,6 @@ export default function Navbar() {
           <NavLink to="/contacto" className="mobile-link" onClick={closeMenu}>
             Contactenos
           </NavLink>
-
-          {user ? (
-            <>
-              <span className="mobile-user">☕ {user.nombre}</span>
-
-              <button onClick={handleLogout} className="mobile-btn">
-                Cerrar sesión
-              </button>
-            </>
-          ) : (
-            <NavLink to="/login" className="mobile-btn" onClick={closeMenu}>
-              Login
-            </NavLink>
-          )}
         </div>
       </nav>
 

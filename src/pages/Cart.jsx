@@ -1,10 +1,43 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 
+// 🔥 imágenes
+import premium from "../assets/premium.jpeg";
+import tradicional from "../assets/tradicional.jpeg";
+import fermentacion from "../assets/fermentacion prolongada.jpeg";
+
+const imagenes = {
+  1: premium,
+  2: tradicional,
+  3: fermentacion,
+};
+
 export default function Cart() {
   const { cart, removeFromCart, addToCart, decreaseQuantity } = useContext(CartContext);
 
   const total = cart.reduce((acc, item) => acc + item.precio * item.quantity, 0);
+
+  //  FUNCIÓN WHATSAPP
+  const finalizarCompra = () => {
+    const numero = "573205971279";
+
+    const productos = cart
+      .map(
+        item =>
+          `• ${item.nombre} x${item.quantity} - $${(
+            item.precio * item.quantity
+          ).toFixed(2)}`
+      )
+      .join("%0A");
+
+    const mensaje = `Hola Maka 👋, quiero comprar los siguientes productos:%0A%0A${productos}%0A%0ATotal: $${total.toFixed(
+      2
+    )}`;
+
+    const url = `https://wa.me/${numero}?text=${mensaje}`;
+
+    window.open(url, "_blank");
+  };
 
   return (
     <div style={{ marginTop: "100px", padding: "40px 20px" }}>
@@ -22,14 +55,18 @@ export default function Cart() {
               {cart.map(item => (
                 <div key={item.id} style={styles.card}>
                   
-                  <img src={img} alt={item.nombre} style={styles.image} />
+                  <img
+                    src={imagenes[item.id] || premium}
+                    alt={item.nombre}
+                    style={styles.image}
+                  />
 
                   <div style={styles.info}>
                     <h3>{item.nombre}</h3>
                     <p>${item.precio}</p>
 
                     <div style={styles.quantityBox}>
-                      <button 
+                      <button
                         style={styles.qtyBtn}
                         onClick={() => decreaseQuantity(item.id)}
                       >
@@ -40,7 +77,7 @@ export default function Cart() {
                         {item.quantity}
                       </span>
 
-                      <button 
+                      <button
                         style={styles.qtyBtn}
                         onClick={() => addToCart(item)}
                       >
@@ -48,7 +85,7 @@ export default function Cart() {
                       </button>
                     </div>
 
-                    <button 
+                    <button
                       style={styles.removeBtn}
                       onClick={() => removeFromCart(item.id)}
                     >
@@ -61,7 +98,11 @@ export default function Cart() {
 
             <div style={styles.summary}>
               <h3>Total: ${total.toFixed(2)}</h3>
-              <button style={styles.checkoutBtn}>
+
+              <button
+                style={styles.checkoutBtn}
+                onClick={finalizarCompra}
+              >
                 Finalizar Compra
               </button>
             </div>
@@ -156,10 +197,12 @@ const styles = {
   checkoutBtn: {
     marginTop: "10px",
     padding: "12px 30px",
-    background: "#d7a86e",
+    background: "#25D366",
+    color: "white",
     border: "none",
     borderRadius: "30px",
     fontWeight: "600",
     cursor: "pointer",
+    fontSize: "1rem",
   },
 };
