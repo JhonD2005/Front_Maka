@@ -12,7 +12,6 @@ const imagenes = {
   3: fermentacion,
 };
 
-
 const productosMock = [
   {
     id: 1,
@@ -61,10 +60,28 @@ export default function Productos() {
   const [productos, setProductos] = useState([]);
   const [addedId, setAddedId] = useState(null);
 
+  const [isMobile, setIsMobile] = useState(
+    window.innerWidth <= 768
+  );
+
   const { addToCart } = useContext(CartContext);
 
   useEffect(() => {
     setProductos(productosMock);
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () =>
+      window.removeEventListener(
+        "resize",
+        handleResize
+      );
   }, []);
 
   const handleAdd = (producto) => {
@@ -79,12 +96,9 @@ export default function Productos() {
   return (
     <>
       <section style={styles.section}>
-
-        {/* textura elegante */}
         <div style={styles.overlay}></div>
 
         <div style={styles.container}>
-
           <div style={styles.heading}>
             <span style={styles.badge}>
               Café Colombiano Especial
@@ -95,125 +109,223 @@ export default function Productos() {
             </h2>
 
             <p style={styles.subtitle}>
-              Cultivado artesanalmente en las montañas de
-              Antioquia. Calidad, aroma y tradición en cada
-              taza.
+              Cultivado artesanalmente en las montañas
+              de Antioquia. Calidad, aroma y tradición
+              en cada taza.
             </p>
           </div>
 
           <div style={styles.grid}>
             {productos.map((p) => (
-              <div
-                key={p.id}
-                style={styles.flipCard}
-                onMouseEnter={(e) => {
-                  if (window.innerWidth > 768) {
-                    e.currentTarget.firstChild.style.transform =
-                      "rotateY(180deg)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (window.innerWidth > 768) {
-                    e.currentTarget.firstChild.style.transform =
-                      "rotateY(0deg)";
-                  }
-                }}
-              >
-                <div style={styles.flipInner}>
 
-                  {/* FRONT */}
-                  <div style={styles.front}>
+              isMobile ? (
 
-                    <div style={styles.imageWrapper}>
-                      <div style={styles.imageGlow}></div>
+                <div
+                  key={p.id}
+                  style={styles.mobileCard}
+                >
 
-                      <img
-                        src={imagenes[p.id]}
-                        alt={p.nombre}
-                        style={styles.image}
-                      />
-                    </div>
+                  <div style={styles.mobileImageBox}>
+                    <div style={styles.mobileGlow}></div>
 
-                    <div style={styles.content}>
+                    <img
+                      src={imagenes[p.id]}
+                      alt={p.nombre}
+                      style={styles.mobileImage}
+                    />
+                  </div>
 
-                      <span style={styles.tag}>
-                        Café Colombiano
-                      </span>
+                  <div style={styles.mobileContent}>
 
-                      <h3 style={styles.name}>
-                        {p.nombre}
-                      </h3>
+                    <span style={styles.tag}>
+                      Café Colombiano
+                    </span>
 
-                      <p style={styles.description}>
-                        {p.descripcion}
-                      </p>
+                    <h3 style={styles.mobileTitle}>
+                      {p.nombre}
+                    </h3>
 
-                      <div style={styles.footerCard}>
+                    <p style={styles.mobileDescription}>
+                      {p.descripcion}
+                    </p>
 
-                        <span style={styles.price}>
-                          ${p.precio}
+                    <div style={styles.mobileInfo}>
+
+                      <div style={styles.infoItem}>
+                        <span style={styles.infoLabel}>
+                          Origen
                         </span>
 
-                        <span style={styles.weight}>
-                          500g
+                        <span style={styles.infoValue}>
+                          {p.origen}
                         </span>
                       </div>
-                    </div>
-                  </div>
 
-                  {/* BACK */}
-                  <div style={styles.back}>
+                      <div style={styles.infoItem}>
+                        <span style={styles.infoLabel}>
+                          Tueste
+                        </span>
 
-                    <div>
-                      <h3 style={styles.backTitle}>
-                        {p.nombre}
-                      </h3>
+                        <span style={styles.infoValue}>
+                          {p.tueste}
+                        </span>
+                      </div>
 
-                      <p style={styles.backText}>
-                        <strong>Origen:</strong> {p.origen}
-                      </p>
+                      <div style={styles.infoItem}>
+                        <span style={styles.infoLabel}>
+                          Notas
+                        </span>
 
-                      <p style={styles.backText}>
-                        <strong>Tueste:</strong> {p.tueste}
-                      </p>
+                        <span style={styles.infoValue}>
+                          {p.notas}
+                        </span>
+                      </div>
 
-                      <p style={styles.backText}>
-                        <strong>Notas:</strong> {p.notas}
-                      </p>
-
-                      <p style={styles.backText}>
-                        <strong>Presentación:</strong> {p.gramos}
-                      </p>
-
-                      <p style={styles.backDescription}>
-                        {p.detalle}
-                      </p>
                     </div>
 
-                    <button
-                      style={{
-                        ...styles.button,
-                        background:
-                          addedId === p.id
-                            ? "#4CAF50"
-                            : "#6f4e37",
-                      }}
-                      onClick={() => handleAdd(p)}
-                    >
-                      {addedId === p.id
-                        ? "✔ Agregado"
-                        : "Agregar"}
-                    </button>
-                  </div>
+                    <div style={styles.mobileBottom}>
 
+                      <div>
+                        <div style={styles.mobilePrice}>
+                          ${p.precio}
+                        </div>
+
+                        <div style={styles.mobileWeight}>
+                          {p.gramos}
+                        </div>
+                      </div>
+
+                      <button
+                        style={{
+                          ...styles.mobileButton,
+                          background:
+                            addedId === p.id
+                              ? "#4CAF50"
+                              : "#6f4e37",
+                        }}
+                        onClick={() => handleAdd(p)}
+                      >
+                        {addedId === p.id
+                          ? "✔"
+                          : "Agregar"}
+                      </button>
+
+                    </div>
+                  </div>
                 </div>
-              </div>
+
+              ) : (
+
+                <div
+                  key={p.id}
+                  style={styles.flipCard}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.firstChild.style.transform =
+                      "rotateY(180deg)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.firstChild.style.transform =
+                      "rotateY(0deg)";
+                  }}
+                >
+                  <div style={styles.flipInner}>
+
+                    {/* FRONT */}
+                    <div style={styles.front}>
+
+                      <div style={styles.imageWrapper}>
+                        <div style={styles.imageGlow}></div>
+
+                        <img
+                          src={imagenes[p.id]}
+                          alt={p.nombre}
+                          style={styles.image}
+                        />
+                      </div>
+
+                      <div style={styles.content}>
+
+                        <span style={styles.tag}>
+                          Café Colombiano
+                        </span>
+
+                        <h3 style={styles.name}>
+                          {p.nombre}
+                        </h3>
+
+                        <p style={styles.description}>
+                          {p.descripcion}
+                        </p>
+
+                        <div style={styles.footerCard}>
+
+                          <span style={styles.price}>
+                            ${p.precio}
+                          </span>
+
+                          <span style={styles.weight}>
+                            {p.gramos}
+                          </span>
+
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* BACK */}
+                    <div style={styles.back}>
+
+                      <div>
+                        <h3 style={styles.backTitle}>
+                          {p.nombre}
+                        </h3>
+
+                        <p style={styles.backText}>
+                          <strong>Origen:</strong> {p.origen}
+                        </p>
+
+                        <p style={styles.backText}>
+                          <strong>Tueste:</strong> {p.tueste}
+                        </p>
+
+                        <p style={styles.backText}>
+                          <strong>Notas:</strong> {p.notas}
+                        </p>
+
+                        <p style={styles.backText}>
+                          <strong>Presentación:</strong> {p.gramos}
+                        </p>
+
+                        <p style={styles.backDescription}>
+                          {p.detalle}
+                        </p>
+                      </div>
+
+                      <button
+                        style={{
+                          ...styles.button,
+                          background:
+                            addedId === p.id
+                              ? "#4CAF50"
+                              : "#6f4e37",
+                        }}
+                        onClick={() => handleAdd(p)}
+                      >
+                        {addedId === p.id
+                          ? "✔ Agregado"
+                          : "Agregar"}
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+
+              )
+
             ))}
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer style={styles.footer}>
         <div style={styles.footerContainer}>
 
@@ -326,7 +438,8 @@ const styles = {
 
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+    gridTemplateColumns:
+      "repeat(auto-fit, minmax(300px, 1fr))",
     gap: "35px",
   },
 
@@ -389,8 +502,7 @@ const styles = {
     width: "180px",
     height: "180px",
     borderRadius: "50%",
-    background:
-      "rgba(215,168,110,0.25)",
+    background: "rgba(215,168,110,0.25)",
     filter: "blur(40px)",
   },
 
@@ -420,7 +532,7 @@ const styles = {
   },
 
   name: {
-    fontSize: "2.2rem",
+    fontSize: "2rem",
     color: "#2c1e1a",
     marginTop: "20px",
     lineHeight: "1.1",
@@ -457,7 +569,7 @@ const styles = {
   },
 
   backTitle: {
-    fontSize: "2.1rem",
+    fontSize: "2rem",
     marginBottom: "25px",
     fontWeight: "800",
   },
@@ -466,14 +578,12 @@ const styles = {
     marginBottom: "16px",
     color: "#f3e6db",
     lineHeight: "1.7",
-    fontSize: "1rem",
   },
 
   backDescription: {
     marginTop: "30px",
     lineHeight: "1.8",
     color: "#ddd",
-    fontSize: "0.95rem",
   },
 
   button: {
@@ -484,7 +594,111 @@ const styles = {
     fontWeight: "700",
     cursor: "pointer",
     fontSize: "1rem",
-    transition: "0.3s",
+  },
+
+  mobileCard: {
+    background: "rgba(255,255,255,0.82)",
+    borderRadius: "28px",
+    overflow: "hidden",
+    backdropFilter: "blur(12px)",
+    border: "1px solid rgba(255,255,255,0.6)",
+    boxShadow: "0 10px 35px rgba(0,0,0,0.08)",
+  },
+
+  mobileImageBox: {
+    position: "relative",
+    height: "260px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    background:
+      "linear-gradient(to bottom,#f4ece4,#efe5db)",
+  },
+
+  mobileGlow: {
+    position: "absolute",
+    width: "180px",
+    height: "180px",
+    borderRadius: "50%",
+    background: "rgba(215,168,110,0.25)",
+    filter: "blur(40px)",
+  },
+
+  mobileImage: {
+    width: "210px",
+    height: "210px",
+    objectFit: "contain",
+    position: "relative",
+    zIndex: 2,
+  },
+
+  mobileContent: {
+    padding: "24px",
+  },
+
+  mobileTitle: {
+    fontSize: "2rem",
+    fontWeight: "800",
+    color: "#2c1e1a",
+    marginTop: "16px",
+  },
+
+  mobileDescription: {
+    marginTop: "12px",
+    color: "#666",
+    lineHeight: "1.7",
+  },
+
+  mobileInfo: {
+    marginTop: "25px",
+    display: "grid",
+    gap: "14px",
+  },
+
+  infoItem: {
+    background: "#f7efe7",
+    padding: "14px",
+    borderRadius: "18px",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+
+  infoLabel: {
+    color: "#6f4e37",
+    fontWeight: "700",
+  },
+
+  infoValue: {
+    color: "#444",
+    fontWeight: "500",
+  },
+
+  mobileBottom: {
+    marginTop: "28px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  mobilePrice: {
+    fontSize: "1.5rem",
+    fontWeight: "800",
+    color: "#6f4e37",
+  },
+
+  mobileWeight: {
+    color: "#777",
+    marginTop: "4px",
+  },
+
+  mobileButton: {
+    border: "none",
+    color: "white",
+    padding: "14px 24px",
+    borderRadius: "18px",
+    fontWeight: "700",
+    fontSize: "1rem",
+    cursor: "pointer",
   },
 
   footer: {
